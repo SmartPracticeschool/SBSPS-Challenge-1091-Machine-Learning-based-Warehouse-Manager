@@ -41,3 +41,6 @@ wheels/
 
 # vscode
 .vscode/
+
+# Nodejs
+node_modules

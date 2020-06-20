@@ -27,8 +27,6 @@ def prepare_dataframe(df):
 
 def get_complete_data(data):
     # Merging data given data with extra information
-    center_id = data['center_id']
-    meal_id = data['meal_id']
     center_df = pd.read_csv("./backend/datasets/fulfilment_center_info.csv")
     meal_df = pd.read_csv("./backend/datasets/meal_info.csv")
 
@@ -36,13 +34,9 @@ def get_complete_data(data):
 
     input_df = pd.DataFrame(data_dict)
 
-    meal_row = meal_df[meal_df['meal_id'] == meal_id]
+    final_df = input_df.merge(meal_df, on='meal_id')
 
-    center_row = center_df[center_df['center_id'] == center_id]
-
-    final_df = input_df.merge(meal_row, on='meal_id')
-
-    final_df = final_df.merge(center_row, on='center_id')
+    final_df = final_df.merge(center_df, on='center_id')
 
     final_df = prepare_dataframe(final_df)
 
