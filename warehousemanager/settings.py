@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-
+from dotenv import load_dotenv
+load_dotenv()
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -119,3 +120,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+AUTHENTICATION_TOKEN_URL = os.getenv('AUTHENTICATION_TOKEN_URL')
+APIKEY = os.getenv('APIKEY')
+SOCRING_URL = os.getenv('SOCRING_URL')
+INSTANCE_ID = os.getenv('INSTANCE_ID')
