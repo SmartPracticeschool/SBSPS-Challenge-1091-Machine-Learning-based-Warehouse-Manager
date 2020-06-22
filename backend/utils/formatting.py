@@ -1,12 +1,14 @@
 import pandas as pd
 
-
 def format_data(data):
-    data_dict = dict()
-    for key in data:
-        data_dict[key] = [data[key]]
-    return data_dict
+    data_list = list()
+    for d in data:
+        temp = dict()
+        for key in d:
+            temp[key] = eval(d[key])
+        data_list.append(temp)
 
+    return data_list
 
 def prepare_dataframe(df):
     # Data Preparation encoding the categorical values
@@ -24,19 +26,22 @@ def prepare_dataframe(df):
 
     return df
 
-
 def get_complete_data(data):
     # Merging data given data with extra information
     center_df = pd.read_csv("./backend/datasets/fulfilment_center_info.csv")
     meal_df = pd.read_csv("./backend/datasets/meal_info.csv")
 
-    data_dict = format_data(data)
-
-    input_df = pd.DataFrame(data_dict)
+    if isinstance(data, list):
+        data_list = format_data(data)
+        input_df = pd.DataFrame(data_list)
+    else:
+        input_df = data
 
     final_df = input_df.merge(meal_df, on='meal_id')
 
     final_df = final_df.merge(center_df, on='center_id')
+
+    print(final_df.head())
 
     final_df = prepare_dataframe(final_df)
 
@@ -44,14 +49,22 @@ def get_complete_data(data):
 
     return final_data
 
+def segregate_data(data_dict):
+    final_list = list()
+    for i in range(0, len(list(data_dict.values())[0])):
+        temp_list = list()
+        for key in data_dict.keys():
+            temp_list.append(data_dict[key][i])
+        final_list.append(temp_list)
+
+    return final_list
+
 
 def get_scoring_payload(data):
-
     final_data_dict = get_complete_data(data)
-
     fields = list(final_data_dict.keys())
-    values = [str(x[0]) for x in final_data_dict.values()]
+    values = segregate_data(final_data_dict)
 
-    scoring_payload = {"fields": fields, "values": [values]}
+    scoring_payload = {"fields": fields, "values": values}
 
     return scoring_payload

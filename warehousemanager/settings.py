@@ -26,7 +26,7 @@ SECRET_KEY = '@=j(vl@zv1r02h@&f)70m@tu6l_5iuu0=7(ly6!*n5*ev&sq^('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -125,5 +125,9 @@ STATIC_URL = '/static/'
 
 AUTHENTICATION_TOKEN_URL = os.getenv('AUTHENTICATION_TOKEN_URL')
 APIKEY = os.getenv('APIKEY')
-SOCRING_URL = os.getenv('SOCRING_URL')
+SCORING_URL = os.getenv('SCORING_URL')
 INSTANCE_ID = os.getenv('INSTANCE_ID')
+DEPLOYMENT_UID = os.getenv('DEPLOYMENT_UID')
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, './backend/uploads')

@@ -1,47 +1,42 @@
 from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
-import requests
+from django.core.files.storage import FileSystemStorage
+from django.http import JsonResponse
 
-from warehousemanager.settings import (
-    APIKEY,
-    INSTANCE_ID,
-    AUTHENTICATION_TOKEN_URL,
-    SOCRING_URL
-)
+from .utils.predict import get_predictions, get_file_predictions, get_endpoint_predictions
 
-from .forms import Data_form
-from .utils.formatting import get_scoring_payload
+import json
+import os
 
-# Create your views here.
-
-
-# Home view
-def home_view(request):
-    return HttpResponse('<h1>Homepage</h1>')
-
-# Prediction view
-
-
+# Prediction views
 def predict_view(request, *args, **kwargs):
-    if request.method == 'POST':
-        form = Data_form(request.POST)
-        if form.is_valid():
-            #  Get Authentication token
-            headers = {"content-type": "application/x-www-form-urlencoded"}
-            payload = {
-                "grant_type": "urn:ibm:params:oauth:grant-type:apikey", "apikey": APIKEY}
-            token_res = requests.post(
-                AUTHENTICATION_TOKEN_URL, headers=headers, data=payload)
-            token = token_res.json()['access_token']
-
-            # Predict the num_orders
-            predict_headers = {'Content-Type': 'application/json',
-                               "Authorization": "Bearer "+token, "ML-Instance-ID": INSTANCE_ID}
-            scoring_payload = get_scoring_payload(form.cleaned_data)
-            predict_res = requests.post(
-                SOCRING_URL, headers=predict_headers, json=scoring_payload)
-
-            return JsonResponse(predict_res.json(), status=200)
+    if request.is_ajax():
+        if request.method == 'POST':
+            predictions = get_predictions(json.loads(request.body))
+            return JsonResponse(predictions, status=200)
+        else:
+            return JsonResponse({"message": "Method not allowed"}, status=401)
     else:
-        form = Data_form()
-    return render(request, 'components/form.html', {"form": form})
+        JsonResponse({"message": "Request Not Allowed"}, status=401)
+
+def file_predict_view(request, *args, **kwargs):
+    if request.is_ajax():
+        if request.method == 'POST' and request.FILES['file']:
+            myfile = request.FILES['file']
+            fs = FileSystemStorage()
+            filename = fs.save(myfile.name, myfile)
+            predictions = get_file_predictions(filename)
+            return JsonResponse(predictions, status=200)
+        else:
+            return JsonResponse({"message": "Method not allowed"}, status=401)
+    else:
+        JsonResponse({"message": "Request Not Allowed"}, status=401)
+
+def scoring_url_predict_view(request, *args, **kwargs):
+    if request.is_ajax():
+        if request.method == "POST":
+            predictions = get_endpoint_predictions(json.loads(request.body))
+            return JsonResponse(predictions, status=200)
+        else:
+            return JsonResponse({"message": "Method not allowed"}, status=401)
+    else:
+        JsonResponse({"message": "Request Not Allowed"}, status=401)
