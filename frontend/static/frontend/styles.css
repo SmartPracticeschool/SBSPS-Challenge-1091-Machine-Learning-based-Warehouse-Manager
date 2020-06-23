@@ -4,10 +4,12 @@
 	-webkit-transition: outline-offset .15s ease-in-out,
 		background-color .15s linear;
 	transition: outline-offset .15s ease-in-out, background-color .15s linear;
-	padding: 120px 0px 85px 35%;
+	padding: 120px 0px 85px 5%;
 	text-align: center !important;
-	margin: 0;
 	width: 100% !important;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 .files input:focus {
 	outline: 2px dashed #92b0b3;

@@ -1,9 +1,9 @@
 import React from "react";
-import Dashboard from "./Dashboard";
+import Dashboard from "./DashBoard";
 
 const App = () => {
 	return (
-		<div className='container'>
+		<div>
 			<Dashboard />
 		</div>
 	);

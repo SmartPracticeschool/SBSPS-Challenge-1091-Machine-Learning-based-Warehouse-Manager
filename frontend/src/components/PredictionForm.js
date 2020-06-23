@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { Paper, TextField, MenuItem, Button } from "@material-ui/core";
+import useStyles from "../styles/PredictionForm.styles";
+
 const PredictionForm = ({ data, setData }) => {
 	const [ weekInput, setWeekInput ] = useState("");
 	const [ centerIdInput, setCenterIdInput ] = useState("");
@@ -22,52 +25,98 @@ const PredictionForm = ({ data, setData }) => {
 		setData([ ...data, newData ]);
 	};
 
+	const options = [ 0, 1 ];
+
+	const classes = useStyles();
+
 	return (
-		<form onSubmit={handleSubmit}>
-			<label htmlFor='week'>Week</label>
-			<input
-				onChange={(e) => setWeekInput(e.target.value)}
-				type='text'
-				id='week'
-			/>
-			<label htmlFor='center_id'>Center ID</label>
-			<input
-				onChange={(e) => setCenterIdInput(e.target.value)}
-				type='text'
-				id='center_id'
-			/>
-			<label htmlFor='meal_id'>Meal ID</label>
-			<input
-				onChange={(e) => setMealIdInput(e.target.value)}
-				type='text'
-				id='meal_id'
-			/>
-			<label htmlFor='base_price'>Base Price</label>
-			<input
-				onChange={(e) => setBasePriceInput(e.target.value)}
-				type='text'
-				id='base_price'
-			/>
-			<label htmlFor='checkout_price'>Checkout Price</label>
-			<input
-				onChange={(e) => setCheckoutPriceInput(e.target.value)}
-				type='text'
-				id='checkout_price'
-			/>
-			<label htmlFor='homepage_featured'>Homepage Featured</label>
-			<input
-				onChange={(e) => setHomepageInput(e.target.value)}
-				type='text'
-				id='homepage_featured'
-			/>
-			<label htmlFor='emailer_for_promotion'>Emailer For Promotion</label>
-			<input
-				onChange={(e) => setEmailerInput(e.target.value)}
-				type='text'
-				id='emailer_for_promotion'
-			/>
-			<button type='submit'>Submit</button>
-		</form>
+		<div className={classes.root}>
+			<Paper className={classes.paper}>
+				<form onSubmit={handleSubmit} className={classes.form}>
+					<TextField
+						label='week'
+						margin='normal'
+						variant='outlined'
+						type='number'
+						value={weekInput}
+						onChange={(e) => setWeekInput(e.target.value)}
+						style={{ width: 100 }}
+					/>
+					<TextField
+						label='Center Id'
+						margin='normal'
+						variant='outlined'
+						type='number'
+						value={centerIdInput}
+						onChange={(e) => setCenterIdInput(e.target.value)}
+						style={{ width: 150 }}
+					/>
+					<TextField
+						label='Meal Id'
+						margin='normal'
+						variant='outlined'
+						type='number'
+						value={mealIdInput}
+						onChange={(e) => setMealIdInput(e.target.value)}
+						style={{ width: 150 }}
+					/>
+					<TextField
+						label='Base Price'
+						margin='normal'
+						variant='outlined'
+						type='number'
+						value={basePriceInput}
+						onChange={(e) => setBasePriceInput(e.target.value)}
+						style={{ width: 200 }}
+					/>
+					<TextField
+						label='Checkout Price'
+						margin='normal'
+						variant='outlined'
+						type='number'
+						value={checkoutPriceInput}
+						onChange={(e) => setCheckoutPriceInput(e.target.value)}
+						style={{ width: 200 }}
+					/>
+					<TextField
+						select
+						label='Homepage Featured'
+						value={homepageInput}
+						onChange={(e) => setHomepageInput(e.target.value)}
+						variant='outlined'
+						margin='normal'
+						style={{ width: 200 }}>
+						{options.map((option) => (
+							<MenuItem key={option} value={option}>
+								{option}
+							</MenuItem>
+						))}
+					</TextField>
+					<TextField
+						select
+						label='Emailer for Promotion'
+						value={emailerInput}
+						onChange={(e) => setEmailerInput(e.target.value)}
+						variant='outlined'
+						margin='normal'
+						style={{ width: 200 }}>
+						{options.map((option) => (
+							<MenuItem key={option} value={option}>
+								{option}
+							</MenuItem>
+						))}
+					</TextField>
+					<Button
+						type='submit'
+						size='large'
+						style={{ height: "53px", marginTop: "6px" }}
+						color='primary'
+						variant='contained'>
+						Add
+					</Button>
+				</form>
+			</Paper>
+		</div>
 	);
 };
 
