@@ -11,7 +11,17 @@ const PredictionForm = ({ data, setData }) => {
 	const [ basePriceInput, setBasePriceInput ] = useState("");
 	const [ checkoutPriceInput, setCheckoutPriceInput ] = useState("");
 
-	const handleSubmit = async (e) => {
+	const reset = () => {
+		setWeekInput("");
+		setCenterIdInput("");
+		setMealIdInput("");
+		setHomepageInput("");
+		setEmailerInput("");
+		setBasePriceInput("");
+		setCheckoutPriceInput("");
+	};
+
+	const handleSubmit = (e) => {
 		e.preventDefault();
 		const newData = {
 			week: weekInput,
@@ -23,9 +33,10 @@ const PredictionForm = ({ data, setData }) => {
 			emailer_for_promotion: emailerInput
 		};
 		setData([ ...data, newData ]);
+		reset();
 	};
 
-	const options = [ 0, 1 ];
+	const options = [ "0", "1" ];
 
 	const classes = useStyles();
 
@@ -34,10 +45,11 @@ const PredictionForm = ({ data, setData }) => {
 			<Paper className={classes.paper}>
 				<form onSubmit={handleSubmit} className={classes.form}>
 					<TextField
-						label='week'
+						label='Week'
 						margin='normal'
 						variant='outlined'
 						type='number'
+						required
 						value={weekInput}
 						onChange={(e) => setWeekInput(e.target.value)}
 						style={{ width: 100 }}
@@ -47,6 +59,7 @@ const PredictionForm = ({ data, setData }) => {
 						margin='normal'
 						variant='outlined'
 						type='number'
+						required
 						value={centerIdInput}
 						onChange={(e) => setCenterIdInput(e.target.value)}
 						style={{ width: 150 }}
@@ -56,6 +69,7 @@ const PredictionForm = ({ data, setData }) => {
 						margin='normal'
 						variant='outlined'
 						type='number'
+						required
 						value={mealIdInput}
 						onChange={(e) => setMealIdInput(e.target.value)}
 						style={{ width: 150 }}
@@ -64,28 +78,31 @@ const PredictionForm = ({ data, setData }) => {
 						label='Base Price'
 						margin='normal'
 						variant='outlined'
-						type='number'
+						type='text'
+						required
 						value={basePriceInput}
 						onChange={(e) => setBasePriceInput(e.target.value)}
-						style={{ width: 200 }}
+						style={{ width: 160 }}
 					/>
 					<TextField
 						label='Checkout Price'
 						margin='normal'
 						variant='outlined'
-						type='number'
+						type='text'
+						required
 						value={checkoutPriceInput}
 						onChange={(e) => setCheckoutPriceInput(e.target.value)}
-						style={{ width: 200 }}
+						style={{ width: 160 }}
 					/>
 					<TextField
 						select
 						label='Homepage Featured'
 						value={homepageInput}
+						required
 						onChange={(e) => setHomepageInput(e.target.value)}
 						variant='outlined'
 						margin='normal'
-						style={{ width: 200 }}>
+						style={{ width: 210 }}>
 						{options.map((option) => (
 							<MenuItem key={option} value={option}>
 								{option}
@@ -96,10 +113,11 @@ const PredictionForm = ({ data, setData }) => {
 						select
 						label='Emailer for Promotion'
 						value={emailerInput}
+						required
 						onChange={(e) => setEmailerInput(e.target.value)}
 						variant='outlined'
 						margin='normal'
-						style={{ width: 200 }}>
+						style={{ width: 210 }}>
 						{options.map((option) => (
 							<MenuItem key={option} value={option}>
 								{option}

@@ -1,26 +1,24 @@
 import React, { useState } from "react";
-import PredictionForm from "./PredictionForm";
 import { Button, Paper } from "@material-ui/core";
 import { green } from "@material-ui/core/colors";
 import { withStyles } from "@material-ui/core/styles";
+
+import PredictionForm from "./PredictionForm";
+import ManualPredictionTable from "./ManualPredictionTable";
+import useStyles from "../styles/ManualPredictionView.styles";
 
 import Cookies from "js-cookie";
 import axios from "axios";
 
 const ManualPredictionView = () => {
-	const ColorButton = withStyles((theme) => ({
-		root: {
-			color: "white",
-			backgroundColor: green[500],
-			"&:hover": {
-				backgroundColor: green[700]
-			}
-		}
-	}))(Button);
-
 	const [ data, setData ] = useState([]);
+	const [ predictions, setPredictions ] = useState([]);
+	const [ predicting, setPredicting ] = useState(false);
+
+	const classes = useStyles();
 
 	const handleManualFormClick = async () => {
+		setPredicting(true);
 		console.log(data);
 		try {
 			const config = {
@@ -32,11 +30,13 @@ const ManualPredictionView = () => {
 				}
 			};
 			const res = await axios.post(
-				"http://localhost:8000/test/",
+				"http://localhost:8000/predict/manual/",
 				data,
 				config
 			);
-			console.log(res);
+			setPredicting(false);
+			console.log(res.data.predictions[0].values);
+			setPredictions(res.data.predictions[0].values);
 		} catch (error) {
 			console.log(error);
 		}
@@ -45,23 +45,49 @@ const ManualPredictionView = () => {
 	return (
 		<div>
 			<PredictionForm data={data} setData={setData} />
-			<Paper
-				style={{
-					marginTop: 8,
-					display: "flex",
-					justifyContent: "center",
-					alignItems: "center",
-					minHeight: "10vh"
-				}}>
+			<Paper className={classes.paper}>
+				<ManualPredictionTable
+					data={data}
+					predictions={predictions}
+					predicting={predicting}
+				/>
+			</Paper>
+			<div className={classes.buttons}>
 				<ColorButton
+					className={classes.button}
 					variant='contained'
 					color='primary'
-					onClick={handleManualFormClick}>
+					size='large'
+					onClick={handleManualFormClick}
+					disabled={data.length === 0 || predicting}>
 					Predict
 				</ColorButton>
-			</Paper>
+				{(predictions.length !== 0 || data.length !== 0) && (
+					<Button
+						className={classes.button}
+						variant='contained'
+						color='secondary'
+						size='large'
+						onClick={() => {
+							setData([]);
+							setPredictions([]);
+						}}>
+						Reset
+					</Button>
+				)}
+			</div>
 		</div>
 	);
 };
+
+const ColorButton = withStyles((theme) => ({
+	root: {
+		color: "white",
+		backgroundColor: green[500],
+		"&:hover": {
+			backgroundColor: green[700]
+		}
+	}
+}))(Button);
 
 export default ManualPredictionView;

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
 import Tabs from "./Tabs";
-import ManualPredictionView from "./ManualPredictionView";
 import FilePredictionView from "./FilePredictionView";
+import ManualPredictionView from "./ManualPredictionView";
 
 const PredictionTab = () => {
 	const [ state, setState ] = useState("manual");

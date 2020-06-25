@@ -7,7 +7,6 @@ def format_data(data):
         for key in d:
             temp[key] = eval(d[key])
         data_list.append(temp)
-
     return data_list
 
 def prepare_dataframe(df):
@@ -41,19 +40,17 @@ def get_complete_data(data):
 
     final_df = final_df.merge(center_df, on='center_id')
 
-    print(final_df.head())
-
     final_df = prepare_dataframe(final_df)
 
     final_data = final_df.to_dict()
 
     return final_data
 
-def segregate_data(data_dict):
+def segregate_data(data_dict, keys):
     final_list = list()
     for i in range(0, len(list(data_dict.values())[0])):
         temp_list = list()
-        for key in data_dict.keys():
+        for key in keys:
             temp_list.append(data_dict[key][i])
         final_list.append(temp_list)
 
@@ -62,8 +59,8 @@ def segregate_data(data_dict):
 
 def get_scoring_payload(data):
     final_data_dict = get_complete_data(data)
-    fields = list(final_data_dict.keys())
-    values = segregate_data(final_data_dict)
+    fields = ['week', 'center_id', 'meal_id', 'base_price', 'checkout_price', 'homepage_featured', 'emailer_for_promotion', 'category', 'cuisine', 'city_code', 'region_code', 'center_type', 'op_area']
+    values = segregate_data(final_data_dict, fields)
 
     scoring_payload = {"fields": fields, "values": values}
 

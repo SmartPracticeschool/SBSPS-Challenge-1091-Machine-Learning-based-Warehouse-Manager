@@ -20,15 +20,19 @@ def get_file_predictions(filename):
   file_path = fs.path(filename)
   df = pd.read_csv(file_path)
   fs.delete(filename)
+  id_df = pd.DataFrame()
   if 'id' in df.columns:
+    id_df['id'] = df['id']
     df.drop('id', axis=1, inplace=True)
   payload = formatting.get_scoring_payload(df)
 
   scoring_payload = {client.deployments.ScoringMetaNames.INPUT_DATA: [payload]}
 
-  predictions = client.deployments.score(DEPLOYMENT_UID, scoring_payload)
+  result = client.deployments.score(DEPLOYMENT_UID, scoring_payload)
+  id_dict = id_df.to_dict()
+  ids = [id_dict['id'][x] for x in id_dict['id']]
   
-  return predictions
+  return {"id": ids, "predictions": result['predictions']}
 
 def get_predictions(data):
   payload = formatting.get_scoring_payload(data)

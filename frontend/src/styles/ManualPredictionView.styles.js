@@ -1,28 +1,18 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles((theme) => ({
-	root: {
-		marginTop: 8
-	},
+const useStyles = makeStyles(() => ({
 	paper: {
-		minWidth: "inherit",
-		padding: 8
-	},
-	form: {
+		marginTop: 8,
 		display: "flex",
 		justifyContent: "center",
-		flexDirection: "column"
-	},
-	loader: {
-		margin: "auto"
-	},
-	table: {
-		margin: "8px auto"
+		flexDirection: "column",
+		alignItems: "center"
 	},
 	buttons: {
 		display: "flex",
 		justifyContent: "center",
-		alignItems: "center"
+		alignItems: "center",
+		height: "10vh"
 	},
 	button: {
 		margin: "8px"

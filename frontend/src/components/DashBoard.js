@@ -20,10 +20,7 @@ const Dashboard = () => {
 	return (
 		<div className={classes.root}>
 			<CssBaseline />
-			<AppBar
-				position='fixed'
-				color='transparent'
-				className={classes.appBar}>
+			<AppBar position='fixed' color='default' className={classes.appBar}>
 				<Toolbar>
 					<Typography variant='h5' noWrap>
 						Warehouse Manager

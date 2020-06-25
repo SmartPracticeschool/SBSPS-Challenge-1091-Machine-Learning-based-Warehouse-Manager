@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.core.files.storage import FileSystemStorage
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 
 from .utils.predict import get_predictions, get_file_predictions, get_endpoint_predictions
 
@@ -8,7 +8,7 @@ import json
 import os
 
 # Prediction views
-def predict_view(request, *args, **kwargs):
+def manual_predict_view(request, *args, **kwargs):
     if request.is_ajax():
         if request.method == 'POST':
             predictions = get_predictions(json.loads(request.body))
@@ -16,7 +16,7 @@ def predict_view(request, *args, **kwargs):
         else:
             return JsonResponse({"message": "Method not allowed"}, status=401)
     else:
-        JsonResponse({"message": "Request Not Allowed"}, status=401)
+        return JsonResponse({"message": "Request Not Allowed"}, status=401)
 
 def file_predict_view(request, *args, **kwargs):
     if request.is_ajax():
@@ -29,7 +29,7 @@ def file_predict_view(request, *args, **kwargs):
         else:
             return JsonResponse({"message": "Method not allowed"}, status=401)
     else:
-        JsonResponse({"message": "Request Not Allowed"}, status=401)
+        return JsonResponse({"message": "Request Not Allowed"}, status=401)
 
 def scoring_url_predict_view(request, *args, **kwargs):
     if request.is_ajax():
@@ -39,4 +39,5 @@ def scoring_url_predict_view(request, *args, **kwargs):
         else:
             return JsonResponse({"message": "Method not allowed"}, status=401)
     else:
-        JsonResponse({"message": "Request Not Allowed"}, status=401)
+        return JsonResponse({"message": "Request Not Allowed"}, status=401)
+
