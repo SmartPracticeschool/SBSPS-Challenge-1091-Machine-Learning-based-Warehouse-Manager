@@ -1,11 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
+import {
+	HashRouter as Router,
+	Route,
+	Switch,
+	Redirect
+} from "react-router-dom";
 import Dashboard from "./DashBoard";
+import Login from "./auth/Login";
+
+import { Provider, useSelector, useDispatch } from "react-redux";
+import store from "../store";
+import { loadUser } from "../actions/auth";
+import PrivateRoute from "./auth/PrivateRoute";
 
 const App = () => {
+	useEffect(() => {
+		store.dispatch(loadUser());
+	}, []);
 	return (
-		<div>
-			<Dashboard />
-		</div>
+		<Provider store={store}>
+			<Router>
+				<Switch>
+					<PrivateRoute exact path='/' component={Dashboard} />
+					<Route exact path='/login' render={() => <Login />} />
+				</Switch>
+			</Router>
+		</Provider>
 	);
 };
 

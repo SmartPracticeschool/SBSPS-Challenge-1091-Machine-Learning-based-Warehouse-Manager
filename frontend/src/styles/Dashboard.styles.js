@@ -1,4 +1,5 @@
 import { makeStyles } from "@material-ui/core/styles";
+import deepPurple from "@material-ui/core/colors/deepPurple";
 const drawerWidth = 300;
 
 const useStyles = makeStyles((theme) => ({
@@ -6,8 +7,13 @@ const useStyles = makeStyles((theme) => ({
 		display: "flex"
 	},
 	appBar: {
-		zIndex: theme.zIndex.drawer + 1,
+		width: `calc(100% - ${drawerWidth}px)`,
 		marginLeft: drawerWidth
+	},
+	toolbar: {
+		display: "flex",
+		justifyContent: "space-between",
+		width: `85%`
 	},
 	drawer: {
 		width: drawerWidth,
@@ -20,15 +26,16 @@ const useStyles = makeStyles((theme) => ({
 		overflow: "auto",
 		width: drawerWidth
 	},
-	listContainer: {
-		paddingLeft: "110px"
-	},
 	content: {
 		width: "100%",
 		marginTop: "4rem",
 		padding: theme.spacing(3),
 		fontSize: "1rem",
 		overflow: "0"
+	},
+	avatar: {
+		color: "#fff",
+		backgroundColor: deepPurple[500]
 	}
 }));
 
