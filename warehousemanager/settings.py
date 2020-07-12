@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'backend.apps.BackendConfig',
     'frontend.apps.FrontendConfig',
     'accounts.apps.AccountsConfig',
+    'inventory.apps.InventoryConfig',
     'rest_framework',
     'knox',
     'crispy_forms'

@@ -5,10 +5,10 @@ import {
 	Switch,
 	Redirect
 } from "react-router-dom";
-import Dashboard from "./DashBoard";
+import Dashboard from "./Dashboard";
 import Login from "./auth/Login";
 
-import { Provider, useSelector, useDispatch } from "react-redux";
+import { Provider } from "react-redux";
 import store from "../store";
 import { loadUser } from "../actions/auth";
 import PrivateRoute from "./auth/PrivateRoute";

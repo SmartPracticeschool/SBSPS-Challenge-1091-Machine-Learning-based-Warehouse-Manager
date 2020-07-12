@@ -12,8 +12,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	toolbar: {
 		display: "flex",
-		justifyContent: "space-between",
-		width: `85%`
+		justifyContent: "space-between"
 	},
 	drawer: {
 		width: drawerWidth,
@@ -34,7 +33,6 @@ const useStyles = makeStyles((theme) => ({
 		overflow: "0"
 	},
 	avatar: {
-		color: "#fff",
 		backgroundColor: deepPurple[500]
 	}
 }));

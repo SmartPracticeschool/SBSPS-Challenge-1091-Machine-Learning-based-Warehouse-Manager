@@ -5,6 +5,7 @@ module.exports = {
 	entry: "./frontend/src/index.js",
 	output: {
 		filename: "main.js",
+		chunkFilename: "vendor.js",
 		path: path.join(__dirname, "./frontend/static/frontend")
 	},
 	module: {
@@ -15,5 +16,18 @@ module.exports = {
 				loader: "babel-loader"
 			}
 		]
+	},
+	optimization: {
+		splitChunks: {
+			cacheGroups: {
+				vendor: {
+					chunks: "initial",
+					name: "vendor",
+					test: "vendor",
+					enforce: true
+				}
+			}
+		},
+		runtimeChunk: true
 	}
 };
