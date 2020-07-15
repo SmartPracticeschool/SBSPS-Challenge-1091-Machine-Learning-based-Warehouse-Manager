@@ -1,7 +1,7 @@
 from django.db import models
 
 class Meal(models.Model):
-  meal_id = models.IntegerField(blank=False)
+  meal_id = models.IntegerField(blank=False, primary_key=True)
   category = models.CharField(max_length=10,blank=False)
   cuisine = models.CharField(max_length=10, blank=False)
 

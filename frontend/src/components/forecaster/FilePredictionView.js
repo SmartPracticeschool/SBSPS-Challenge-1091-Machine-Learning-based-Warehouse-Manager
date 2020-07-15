@@ -31,11 +31,7 @@ const FilePredictionView = () => {
 					"X-CSRFTOKEN": Cookies.get("csrftoken")
 				}
 			};
-			const res = await axios.post(
-				"http://localhost:8000/predict/file/",
-				data,
-				config
-			);
+			const res = await axios.post("/predict/file/", data, config);
 			setPredictions(res.data.predictions[0].values);
 			setData(res.data.id);
 			setPredicting(false);

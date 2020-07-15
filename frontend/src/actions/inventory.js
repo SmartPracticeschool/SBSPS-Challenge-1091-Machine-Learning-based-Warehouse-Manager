@@ -63,18 +63,21 @@ export const getItems = (dispatch, getState) => {
 };
 
 export const updateItem = (mealId, item) => (dispatch, getState) => {
-	const data = { meals: [ ...item.meals, mealId ] };
-	axios
-		.patch(`/api/inventory/item/${item.id}/`, data, tokenConfig(getState))
-		.then((res) => {
-			dispatch({
-				type: UPDATE_ITEM
-			});
-			dispatch(getSelectedItems(mealId));
-		})
-		.catch((err) =>
-			dispatch(returnErrors(err.response.data, err.response.status))
-		);
+	if (item.meals.includes(mealId)) alert("Item Already exists !");
+	else {
+		const data = { meals: [ ...item.meals, mealId ] };
+		axios
+			.patch(`/api/inventory/item/${item.id}/`, data, tokenConfig(getState))
+			.then((res) => {
+				dispatch({
+					type: UPDATE_ITEM
+				});
+				dispatch(getSelectedItems(mealId));
+			})
+			.catch((err) =>
+				dispatch(returnErrors(err.response.data, err.response.status))
+			);
+	}
 };
 
 export const addMeal = (mealId, category, cuisine) => (dispatch, getState) => {

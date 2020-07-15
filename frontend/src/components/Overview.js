@@ -63,15 +63,15 @@ const Overview = () => {
 	const chartData = [
 		{
 			status: "In Stock",
-			area: 50
+			area: 100 * inStockItems / totalItems
 		},
 		{
 			status: "Low In Stock",
-			area: 20
+			area: 100 * lowInStockItems / totalItems
 		},
 		{
 			status: "Out Of Stock",
-			area: 30
+			area: 100 * outOfStockItems / totalItems
 		}
 	];
 	const classes = useStyles();

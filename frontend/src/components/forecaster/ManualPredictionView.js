@@ -29,11 +29,7 @@ const ManualPredictionView = () => {
 					"X-CSRFTOKEN": Cookies.get("csrftoken")
 				}
 			};
-			const res = await axios.post(
-				"http://localhost:8000/predict/manual/",
-				data,
-				config
-			);
+			const res = await axios.post("/predict/manual/", data, config);
 			setPredicting(false);
 			console.log(res.data.predictions[0].values);
 			setPredictions(res.data.predictions[0].values);

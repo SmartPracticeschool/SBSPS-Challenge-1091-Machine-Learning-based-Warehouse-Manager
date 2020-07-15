@@ -43,9 +43,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'inventory.apps.InventoryConfig',
     'rest_framework',
-    'knox',
-    'crispy_forms'
-
+    'knox'
 ]
 
 REST_FRAMEWORK = {

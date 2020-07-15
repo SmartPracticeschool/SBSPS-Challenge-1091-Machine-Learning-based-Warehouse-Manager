@@ -128,6 +128,11 @@ const Dashboard = () => {
 								<ListItem
 									key={key}
 									button
+									style={{
+										backgroundColor:
+											currentView.name === view.name &&
+											"rgba(0,0,0,0.1)"
+									}}
 									onClick={() => {
 										setState(view.name);
 										dispatch(toggleState("meal"));
