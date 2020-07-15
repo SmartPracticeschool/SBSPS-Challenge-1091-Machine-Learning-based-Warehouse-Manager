@@ -5,6 +5,7 @@ import { green } from "@material-ui/core/colors";
 import useStyles from "../../styles/FilePredictionView.styles";
 import FilePredictionTable from "./FilePredictionTable";
 import Loader from "../common/Loader";
+import { useSelector } from "react-redux";
 
 import Cookies from "js-cookie";
 import axios from "axios";
@@ -14,6 +15,8 @@ const FilePredictionView = () => {
 	const [ data, setData ] = useState([]);
 	const [ predictions, setPredictions ] = useState([]);
 	const [ predicting, setPredicting ] = useState(false);
+	const token = useSelector((state) => state.auth.token);
+
 	const onChangeHandler = (e) => {
 		setSelectedFile(e.target.files[0]);
 	};
@@ -28,7 +31,7 @@ const FilePredictionView = () => {
 					Content_type: "application/json",
 					HTTP_X_REQUESTED_WITH: "XMLHttprequest",
 					"X-Requested-With": "XMLHttpRequest",
-					"X-CSRFTOKEN": Cookies.get("csrftoken")
+					Authorization: `Token ${token}`
 				}
 			};
 			const res = await axios.post("/predict/file/", data, config);

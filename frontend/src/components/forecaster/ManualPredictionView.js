@@ -6,7 +6,7 @@ import { withStyles } from "@material-ui/core/styles";
 import PredictionForm from "./PredictionForm";
 import ManualPredictionTable from "./ManualPredictionTable";
 import useStyles from "../../styles/ManualPredictionView.styles";
-
+import { useSelector } from "react-redux";
 import Cookies from "js-cookie";
 import axios from "axios";
 
@@ -14,6 +14,7 @@ const ManualPredictionView = () => {
 	const [ data, setData ] = useState([]);
 	const [ predictions, setPredictions ] = useState([]);
 	const [ predicting, setPredicting ] = useState(false);
+	const token = useSelector((state) => state.auth.token);
 
 	const classes = useStyles();
 
@@ -26,7 +27,7 @@ const ManualPredictionView = () => {
 					Content_type: "application/json",
 					HTTP_X_REQUESTED_WITH: "XMLHttprequest",
 					"X-Requested-With": "XMLHttpRequest",
-					"X-CSRFTOKEN": Cookies.get("csrftoken")
+					Authorization: `Token ${token}`
 				}
 			};
 			const res = await axios.post("/predict/manual/", data, config);

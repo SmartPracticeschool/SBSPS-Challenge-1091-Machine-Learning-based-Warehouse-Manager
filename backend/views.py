@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.core.files.storage import FileSystemStorage
 from django.http import JsonResponse, HttpResponse
+from rest_framework.decorators import permission_classes
+from rest_framework.permissions import IsAuthenticated
 
 from .utils.predict import get_predictions, get_file_predictions, get_endpoint_predictions
 
@@ -8,6 +10,7 @@ import json
 import os
 
 # Prediction views
+@permission_classes([IsAuthenticated])
 def manual_predict_view(request, *args, **kwargs):
     if request.is_ajax():
         if request.method == 'POST':
@@ -18,6 +21,7 @@ def manual_predict_view(request, *args, **kwargs):
     else:
         return JsonResponse({"message": "Request Not Allowed"}, status=401)
 
+@permission_classes([IsAuthenticated])
 def file_predict_view(request, *args, **kwargs):
     if request.is_ajax():
         if request.method == 'POST' and request.FILES['file']:

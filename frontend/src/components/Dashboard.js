@@ -26,7 +26,7 @@ import Inventory from "./inventory/Inventory";
 
 import { logout } from "../actions/auth";
 import { toggleState } from "../actions/inventory";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import useStyles from "../styles/Dashboard.styles";
 
@@ -55,6 +55,7 @@ const Dashboard = () => {
 	const [ state, setState ] = useState("overview");
 	const [ anchorEl, setAnchorEl ] = useState(null);
 	const open = Boolean(anchorEl);
+	const user = useSelector((state) => state.auth.user);
 
 	const dispatch = useDispatch();
 	const classes = useStyles();
@@ -100,7 +101,7 @@ const Dashboard = () => {
 							}}
 							open={open}
 							onClose={handleClose}>
-							<MenuItem>Digvijay</MenuItem>
+							<MenuItem>{user && user.username}</MenuItem>
 							<Divider />
 							<MenuItem onClick={() => dispatch(logout())}>
 								Logout
